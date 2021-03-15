@@ -2,12 +2,14 @@
 
 let next = document.querySelector('.next');
 let previous = document.querySelector('.previous');
-
+let list = document.querySelector('.list');
+let userScorePoint = document.querySelector('.userScorePoint');
 let question = document.querySelector('.question');
 let answers = document.querySelectorAll('.list-group-item');
 let indexshow = document.querySelector('#index');
 let pointsElem = document.querySelector('.score');
 let restart = document.querySelector('.restart');
+let results = document.querySelector('.results');
 let index = 0;
 let points = 0;
 
@@ -74,10 +76,15 @@ fetch('https://quiztai.herokuapp.com/api/quiz')
 		}
 
 		next.addEventListener('click', function (){
-			if(index <= preQuestions.length){
 			index++;
+			if(index >= preQuestions.length){
+				
+				list.style.display = 'none';
+				results.style.display = 'block';
+				userScorePoint.innerHTML = points;
+			}
+			else{
 			setQuestion(index);
-			removeMark(event.target);
 			activateAnswers();
 			}
 		});
@@ -107,7 +114,6 @@ fetch('https://quiztai.herokuapp.com/api/quiz')
 
 		restart.addEventListener('click', function (event) {
 			event.preventDefault();
-
 			index = 0;
 			points = 0;
 			let userScorePoint = document.querySelector('.score');
